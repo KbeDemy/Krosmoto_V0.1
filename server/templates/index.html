@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+
+    <title>Ka-chow Control Center</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <audio id="bg-music" src="phonk.mp3" loop></audio>
+
+    <div class="top-bar">
+        <button onclick="startMusic()">▶️ Ka-chow muziek</button>
+    </div>
+
+    <h1>🏁 Lightning Reactor Dashboard 🏁</h1>
+
+    <div class="dashboard">
+        <div class="card">
+            <div class="label">Temp (°C)</div>
+            <div class="value" id="temp">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Pressure (kPa)</div>
+            <div class="value" id="pressure">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Power (MW)</div>
+            <div class="value" id="power">--</div>
+        </div>
+        <div class="card">
+            <div class="label">Status</div>
+            <div class="value status" id="status">--</div>
+        </div>
+    </div>
+
+    <div class="tachometer-container">
+        <!-- Speed Tachometer -->
+        <svg id="tachometer-speed" class="tachometer" viewBox="0 -10 200 150">
+            <path d="M20 100 A80 80 0 0 1 180 100" stroke="#222" stroke-width="15" fill="none" />
+            <g id="ticks-speed"></g>
+            <path id="needle-speed" d="M100 100 L100 30" stroke="#ffcc00" stroke-width="6" stroke-linecap="round" />
+            <circle cx="100" cy="100" r="10" fill="#ffcc00" />
+            <text id="speed-text" class="speed-text" x="100" y="140" text-anchor="middle">0 km/h</text>
+        </svg>
+
+        <!-- RPM Tachometer -->
+        <svg id="tachometer-rpm" class="tachometer" viewBox="0 -10 200 150">
+            <path d="M20 100 A80 80 0 0 1 180 100" stroke="#222" stroke-width="15" fill="none" />
+            <g id="ticks-rpm"></g>
+            <path id="needle-rpm" d="M100 100 L100 30" stroke="#ffcc00" stroke-width="6" stroke-linecap="round" />
+            <circle cx="100" cy="100" r="10" fill="#ffcc00" />
+            <text id="rpm-text" class="speed-text" x="100" y="140" text-anchor="middle">0 RPM</text>
+        </svg>
+    </div>
+
+	<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+
+body {
+    font-family: 'Bangers', cursive;
+    background: linear-gradient(#990000, #330000);
+    color: #fff;
+    padding: 20px;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+h1 {
+    color: #ffd700;
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px #000;
+}
+
+.top-bar {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    font-family: 'Bangers', cursive;
+    background: #ffcc00;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 5px #000;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: #660000;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ffcc00;
+    width: 200px;
+    text-align: center;
+}
+
+.label {
+    font-size: 1.2em;
+    color: #ffe680;
+    text-transform: uppercase;
+}
+
+.value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.Nominal {
+    background: #2ecc71;
+    color: #fff;
+}
+
+.Warning {
+    background: #f1c40f;
+    color: #000;
+}
+
+.Critical {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.tachometer-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 40px;
+    min-height: 300px;
+    align-items: center;
+}
+
+svg.tachometer {
+    width: 400px;
+    height: 240px;
+    user-select: none;
+    margin-top: 20px;
+}
+
+text.speed-text {
+    font-size: 30px;
+    fill: #ffcc00;
+    font-family: 'Bangers', cursive;
+}
+
+.tick {
+    stroke: #ffcc00;
+    stroke-width: 2;
+}
+
+.tick-label {
+    fill: #ffcc00;
+    font-family: 'Bangers', cursive;
+    font-size: 14px;
+    user-select: none;
+}
