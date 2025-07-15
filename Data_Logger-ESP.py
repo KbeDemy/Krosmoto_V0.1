@@ -1,6 +1,6 @@
 import serial
 import sqlite3
-import JSON
+import json
 from datetime import datetime
 
 ser = serial.Serial('/dev/ttyUSB0', 9600)
@@ -11,7 +11,7 @@ cursor = conn.cursor()
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS sensor_data (
     timestamp TEXT,
-    value INTEGER
+    value TEXT
 )
 ''')
 
@@ -21,8 +21,8 @@ while True:
     line = ser.readline().decode().strip()
     try:
         data = JSON.loads(line)
-        speed = data['speed']
-        rpm = data['rpm']
+        speed = data.get('speed')
+        rpm = data('rpm')
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         if speed is not None and rpm is not None:
