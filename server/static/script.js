@@ -1,15 +1,3 @@
-function startMusic() {
-    const audio = document.getElementById('bg-music');
-    audio.volume = 0.5;
-    audio.play().catch(err => {
-        console.error("Autoplay geblokkeerd:", err);
-    });
-}
-
-document.addEventListener('click', () => {
-    startMusic();
-}, { once: true });
-
 function createTicksWithLabels(svgGroup, maxTicks, radiusOuter, radiusInner, radiusLabel, maxValue, unit = '') {
     const centerX = 100, centerY = 100;
     const startAngle = -180, totalAngle = 180;
