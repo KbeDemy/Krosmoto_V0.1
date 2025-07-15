@@ -20,9 +20,9 @@ print("Logging gestart...")
 while True:
     line = ser.readline().decode().strip()
     try:
-        data = JSON.loads(line)
+        data = json.loads(line)
         speed = data.get('speed')
-        rpm = data('rpm')
+        rpm = data.get('rpm')
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         
         if speed is not None and rpm is not None:
@@ -31,7 +31,7 @@ while True:
             conn.commit()
         print(f"Data logged: {timestamp} - Speed: {speed}, RPM: {rpm}")
 
-    except JSON.JSONDecodeError:
+    except json.JSONDecodeError:
         print(f"Fout bij het decoderen van JSON: {line}")
     except Exception as e:
         print(f"Fout bij het verwerken van data: {e}")
