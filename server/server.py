@@ -1,42 +1,44 @@
-from flask import Flask, render_template, jsonify, request
+from flask import Flask, render_template, jsonify
 import sqlite3
+import os
 
 app = Flask(__name__)
 
+DB_PATH = os.path.abspath('sensor_data.db')
+print(f"Server gebruikt database: {DB_PATH}")
+
 def get_data():
-    conn = sqlite3.connect('sensor_data.db')  # make database connection
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT rowid, value, timestamp FROM sensor_data ORDER BY timestamp DESC LIMIT 20")
     data = cursor.fetchall()
     conn.close()
     return data
 
-def insert_data(speed, rpm):
-    conn = sqlite3.connect('sensor_data.db') 
-    cursor = conn.cursor()
-    cursor.execute(
-        "INSERT INTO sensor_data (value, timestamp) VALUES (?, datetime('now'))",
-        (f"speed:{speed},rpm:{rpm}",)
-    )
-    conn.commit()
-    conn.close()
-
-    # Opgelet: je mag hier **geen jsonify() returnen** als dit buiten een route gebeurt!
-    # Dat doe je in de route-functie zelf.
-    return
-
 @app.route('/')
 def index():
     data = get_data()
     return render_template('index.html', data=data)
 
-@app.route('/log', methods=['POST'])
-def log_data():
-    data = request.get_json()  # JSON uitlezen van ESP32
-    speed = data['speed']
-    rpm = data['rpm']
-    insert_data(speed, rpm)
-    return jsonify({'status': 'ok'})  #  response naar ESP32
+@app.route('/api/latest')
+def api_latest():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT value, timestamp FROM sensor_data ORDER BY timestamp DESC LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+
+    if row:
+        try:
+            value_str, timestamp = row
+            parts = dict(item.split(":") for item in value_str.split(","))
+            speed = int(parts.get("speed", 0))
+            rpm = int(parts.get("rpm", 0))
+            return jsonify({"speed": speed, "rpm": rpm, "timestamp": timestamp})
+        except Exception as e:
+            return jsonify({"error": "Parse error", "details": str(e)}), 500
+    else:
+        return jsonify({"error": "No data found"}), 404
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

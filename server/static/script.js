@@ -91,8 +91,11 @@ function setRPMNeedle(rpm) {
 }
 
 setInterval(() => {
-    const speedVal = Math.floor(Math.random() * 81);
-    const rpmVal = Math.floor(Math.random() * 4001);
-    setSpeedNeedle(speedVal);
-    setRPMNeedle(rpmVal);
-}, 2000);
+    fetch('/api/latest')
+        .then(response => response.json())
+        .then(data => {
+            setSpeedNeedle(data.speed);
+            setRPMNeedle(data.rpm);
+        })
+        .catch(error => console.error('Error fetching data:', error));
+}, 1000);
